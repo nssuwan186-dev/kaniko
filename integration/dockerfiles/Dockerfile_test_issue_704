@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.23.3
 
 RUN mkdir -p /some/dir/ && echo 'first' > /some/dir/first.txt
 
