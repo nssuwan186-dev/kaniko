@@ -480,9 +480,9 @@ func Test_SkipingUnusedStages(t *testing.T) {
 		{
 			description: "dockerfile_without_copyFrom",
 			dockerfile: `
-			FROM alpine:3.11 AS base-dev
+			FROM alpine:3.23.3 AS base-dev
 			RUN echo dev > /hi
-			FROM alpine:3.11 AS base-prod
+			FROM alpine:3.23.3 AS base-prod
 			RUN echo prod > /hi
 			FROM base-dev as final-stage
 			RUN cat /hi
@@ -507,11 +507,11 @@ func Test_SkipingUnusedStages(t *testing.T) {
 		{
 			description: "dockerfile_with_copyFrom",
 			dockerfile: `
-			FROM alpine:3.11 AS base-dev
+			FROM alpine:3.23.3 AS base-dev
 			RUN echo dev > /hi
-			FROM alpine:3.11 AS base-prod
+			FROM alpine:3.23.3 AS base-prod
 			RUN echo prod > /hi
-			FROM alpine:3.11
+			FROM alpine:3.23.3
 			COPY --from=base-prod /hi /finalhi
 			RUN cat /finalhi
 			`,
@@ -535,11 +535,11 @@ func Test_SkipingUnusedStages(t *testing.T) {
 		{
 			description: "dockerfile_with_two_copyFrom",
 			dockerfile: `
-			FROM alpine:3.11 AS base-dev
+			FROM alpine:3.23.3 AS base-dev
 			RUN echo dev > /hi
-			FROM alpine:3.11 AS base-prod
+			FROM alpine:3.23.3 AS base-prod
 			RUN echo prod > /hi
-			FROM alpine:3.11
+			FROM alpine:3.23.3
 			COPY --from=base-dev /hi /finalhidev
 			COPY --from=base-prod /hi /finalhiprod
 			RUN cat /finalhidev
@@ -604,15 +604,15 @@ func Test_SkipingUnusedStages(t *testing.T) {
 		{
 			description: "dockerfile_without_final_dependencies",
 			dockerfile: `
-			FROM alpine:3.11
+			FROM alpine:3.23.3
 			FROM debian:12.13 as base
 			RUN echo foo > /foo
 			FROM debian:12.13 as fizz
 			RUN echo fizz >> /fizz
 			COPY --from=base /foo /fizz
-			FROM alpine:3.11 as buzz
+			FROM alpine:3.23.3 as buzz
 			RUN echo buzz > /buzz
-			FROM alpine:3.11 as final
+			FROM alpine:3.23.3 as final
 			RUN echo bar > /bar
 			`,
 			targets: []string{"final", "buzz", "fizz", ""},
