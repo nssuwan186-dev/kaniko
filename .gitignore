@@ -5,4 +5,5 @@ BUILD.bazel
 .idea/**
 *.iml
 .vagrant
-.vscode/
+.vscode/kimidev/
+.env
